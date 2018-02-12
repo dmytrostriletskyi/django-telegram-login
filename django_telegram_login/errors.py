@@ -1,6 +1,8 @@
 """
 Errors.
 """
+
+
 class NotTelegramDataError(Exception):
     """
     Error for data that was hacked.

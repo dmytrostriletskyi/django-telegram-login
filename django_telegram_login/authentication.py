@@ -1,13 +1,12 @@
 """
 Telegram login authentication.
 """
-import base64
 import hashlib
 import hmac
 import time
 
 from django_telegram_login.errors import (
-    NotTelegramDataError, 
+    NotTelegramDataError,
     TelegramDataIsOutdatedError,
 )
 
@@ -16,7 +15,7 @@ ONE_DAY_IN_SECONDS = 86400
 
 def verify_telegram_authentication(bot_token, request_data):
     """
-    Check if received data from Telegram based on SHA and HMAC algothims. 
+    Check if received data from Telegram based on SHA and HMAC algothims.
 
     Instructions - https://core.telegram.org/widgets/login#checking-authorization
     """
@@ -42,15 +41,15 @@ def verify_telegram_authentication(bot_token, request_data):
     unix_time_not = int(time.time())
     unix_time_auth_date = int(auth_date)
 
-    if _hash != received_hash:
-        raise NotTelegramDataError(
-                'This is not a Telegram data. Hash from recieved authentication data does not match'
-                'with calculated hash based on bot token.'
-            )
-
     if unix_time_not - unix_time_auth_date > ONE_DAY_IN_SECONDS:
         raise TelegramDataIsOutdatedError(
-                'Authentication data is outdated. Authentication was received more than day ago.'
-            )
+            'Authentication data is outdated. Authentication was received more than day ago.'
+        )
+
+    if _hash != received_hash:
+        raise NotTelegramDataError(
+            'This is not a Telegram data. Hash from recieved authentication data does not match'
+            'with calculated hash based on bot token.'
+        )
 
     return request_data
