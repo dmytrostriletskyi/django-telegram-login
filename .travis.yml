@@ -1,0 +1,17 @@
+language:
+- python
+sudo:
+- false
+  
+python:
+- 3.5
+- 3.6
+  
+before_install:
+- pip install -r requirements-dev.txt
+  
+script:
+- flake8 django_telegram_login
+- pycodestyle django_telegram_login
+- pylint django_telegram_login
+- python -m unittest discover
