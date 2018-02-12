@@ -9,7 +9,7 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     license='MIT',
-    description='Telegram login interface and widgets for Django projects, that allows to register user based on Telegram data.',
+    description='Telegram login interface and widgets for Django projects, that allows to handle user based on Telegram data.',
     url='https://github.com/dmytrostriletskyi/django-telegram-login',
     author='Dmytro Striletskyi',
     author_email='dmytro.striletskyi@gmail.com',

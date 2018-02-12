@@ -1,6 +1,6 @@
 # Django-telegram-login
 
-Django application for Telegram login intefrace and widget handling.
+Telegram login interface and widgets for Django projects, that allows to handle user based on Telegram data.
 
 [![Release](https://img.shields.io/github/release/dmytrostriletskyi/django-telegram-login.svg)](https://github.com/dmytrostriletskyi/django-telegram-login/releases)
 ![Build](https://api.travis-ci.org/dmytrostriletskyi/django-telegram-login.svg?branch=develop)
