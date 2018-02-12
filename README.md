@@ -1,6 +1,6 @@
 # Django-telegram-login
 
-Telegram login interface and widgets for Django projects, that allows to handle user based on Telegram data.
+The external Django application for Telegram authorization (also known as Telegram login).
 
 [![Release](https://img.shields.io/github/release/dmytrostriletskyi/django-telegram-login.svg)](https://github.com/dmytrostriletskyi/django-telegram-login/releases)
 ![Build](https://api.travis-ci.org/dmytrostriletskyi/django-telegram-login.svg?branch=develop)
@@ -16,15 +16,15 @@ First of all, please, if you want to implement a Telegram login into website, ch
 
 ### Preparation
 
-Telegram login inteface (API) requires a website with domain. But you may want to ask, how to develop telegram login on localhost?
+Telegram login inteface (API) requires a website with domain. However you may want to ask how to develop telegram login on a localhost?
 
-Install `localtunnel` tool with following command (be sure that you have a `npm`).
+Install `localtunnel` tool with the following command (be sure that you have a `npm`).
 
 ```bash
 $ npm install -g localtunnel
 ```
 
-Run a tunnel on the port that you are going to specifed for the Django runserver's command. In our example it is a 8000.
+Run a tunnel on the port that you are going to specify for the Django runserver's command. In our case it is a 8000.
 
 ```bash
 $ lt --port 8000
@@ -32,10 +32,10 @@ $ lt --port 8000
 
 You will receive a url, for example `https://gqgh.localtunnel.me`, that you can share with anyone for as long as your local instance of localtunnel remains active. Any requests will be routed to your local service at the specified port.
 
-Use received a url anywhere in development - specify in the settings, set as domain for @[BotFather](t.me/BotFather) and
-brows it - `uqdbszeyer.localtunnel.me/redirect/` instead `127.0.0.1:8000/redirect/`.
+Use received url anywhere in the development - specify in settings, set as domain (`/setdomain` command) for @[BotFather](t.me/BotFather) and
+browse it - `https://gqgh.localtunnel.me/redirect/` instead of `127.0.0.1:8000/redirect/`.
 
-### Instalation
+### Installation
 
 ```bash
 $ pip3 install django-telegram-login
@@ -43,7 +43,7 @@ $ pip3 install django-telegram-login
 
 ### Additional settings
 
-Add the application to installed apps.
+Add application to the installed apps.
 
 ```python
 INSTALLED_APPS = [
@@ -52,12 +52,12 @@ INSTALLED_APPS = [
 ]
 ```
 
-If you use only one bot you are able to add following settings to own `settings.py` in Django project:
+If you use only one bot you are able to add the following settings to own `settings.py` in Django project:
 
 ```python
 TELEGRAM_BOT_NAME = 'django_telegram_login_bot'
 TELEGRAM_BOT_TOKEN = '459236585:AAEee0Ba4fRijf1BRNbBO9W-Ar15F2xgV98'
-TELEGRAM_LOGIN_REDIRECT_URL = 'https://iyjjvnvszx.localtunnel.me/'
+TELEGRAM_LOGIN_REDIRECT_URL = 'https://gqgh.localtunnel.me'
 ```
 
 And use them in cases below:
@@ -71,13 +71,13 @@ bot_token = settings.TELEGRAM_BOT_TOKEN
 redirect_url = settings.TELEGRAM_LOGIN_REDIRECT_URL
 ```
 
-But `django-telegram-login` allow you to use unlimited bots (will see in examples below).
+But `django-telegram-login` allows you to use unlimited bots (described in examples below).
 
 ## How to use
 
 ### Types of login and widgets
 
-You are able to make two reaction on user taps on button: callback and redirect.
+You are able to make two reactions for user interaction with a button: callback and redirect.
 `Callback` allows you to handle user data currently on page - you will receive data from Telegram in special JavaScript-function handler (you need to implement it. Or just copy it).
 
 ```javascript
@@ -88,9 +88,11 @@ You are able to make two reaction on user taps on button: callback and redirect.
 </script>
 ```
 
+A list of user data is following: first_name, last_name, username, photo_url, auth_date (unix datetime) and hash. The two last you do not realy need in development.
+
 So you can handle it on the front-end or make a `AJAX` call to back-end and transfer a data.
 
-`Redirect` redirects user to the specified link - link will contain a user data in get request params in url.
+`Redirect` transfers user to the specified link - it will contain a user data in get request params in url.
 
 ```python
 telegram_login_widget = create_redirect_login_widget(
@@ -98,13 +100,13 @@ telegram_login_widget = create_redirect_login_widget(
 )
 ```
 
-So get it in `request.GET` into your view that handle specified url.
+So get it in `request.GET` within your view that handle specified url.
 
 ```bash
 [12/Feb/2018 03:32:04] "GET /?id=299661134&first_name=Dmytro&last_name=Striletskyi&username=dmytrostriletskyi&photo_url=https%3A%2F%2Ft.me%2Fi%2Fuserpic%2F320%2Fdmytrostriletskyi.jpg&auth_date=1518406180&hash=f5cd61a87131fcf51fc745d465a36bdcc58db4175ccac7c5afbf641359f55807 HTTP/1.1" 200 14
 ```
 
-There are for now 6 type if widget interfaces you can customize with `django-telegram-api`: small, medium and large; with and without photo near button.
+Now there are 6 types of widget interfaces you can customize with `django-telegram-api`: small, medium and large; with and without photo near the button.
 
 ![](https://habrastorage.org/webt/lh/xz/hw/lhxzhwrligxu4rsm-voqb2xovee.png)
 
@@ -118,7 +120,7 @@ There are for now 6 type if widget interfaces you can customize with `django-tel
 
 ![](https://habrastorage.org/webt/y0/ef/u3/y0efu36pcmghb60kukbf8sw2yjk.png)
 
-It is too easy and native. Import the size constants and the constant for disabling photo.
+It is simple. Import size constants and a constant for disabling photo.
 
 ```python
 from django_telegram_login.widgets.constants import (
@@ -129,7 +131,7 @@ from django_telegram_login.widgets.constants import (
 )
 ```
 
-Import a widget generator functions.
+Import widget generator functions.
 
 ```python
 from django_telegram_login.widgets.generator import (
@@ -138,7 +140,7 @@ from django_telegram_login.widgets.generator import (
 )
 ```
 
-Generate the widgets with according functions your widget.
+Generate widgets according to provided functions.
 
 ```python
 telegram_login_widget = create_callback_login_widget(bot_name, size=SMALL)
@@ -148,7 +150,7 @@ telegram_login_widget = create_redirect_login_widget(
 )
 ```
 
-Widget generator returns ф string that contains JavaScript code. This code automaticaly create widget (button) and handle user taps (request) on its owns - your deal is only receive and process user data.
+Widget generator returns a string that contains JavaScript code. This code creates widget (button) automatically and handles user taps (requests) on its own. Your deal is to receive and process user data.
 
 So use it in your views via context.
 
@@ -169,18 +171,18 @@ def redirect(request):
     return render(request, 'telegram_auth/redirect.html', context)
 ```
 
-Do not forget make safe render of it, because it is not raw text, but Javascript. Example of Jinja code below.
+Do not forget to make its rendering safe, because it is not a raw text but Javascript. Below is an example of a Jinja code.
 
 ```html
 {% autoescape off %}{{ telegram_login_widget }}{% endautoescape %}
 ```
 
-Full bunch of examples are open [here](https://github.com/dmytrostriletskyi/django-telegram-login/tree/develop/examples).
+The full bunch of examples is open [here](https://github.com/dmytrostriletskyi/django-telegram-login/tree/develop/examples).
 
 ### Telegram authentication
 
-There are may be the situations, when bad boys will send you incorrect Telegram data (pretend that it is from true user).
-`django-telegram-login` provide following way to ensure, that data is correct and isn't hacked.
+There may be the situations, when hackers will send you incorrect Telegram data (pretending to be from a real user).
+`django-telegram-login` provides the following way to ensure that data is correct and isn't hacked.
 
 ```python
 from django_telegram_login.authentication import verify_telegram_authentication
@@ -191,6 +193,12 @@ from django_telegram_login.errors import (
 
 
 def index(request):
+
+    # Initially, the index page may have no get params in URL
+    # For example, if it is a home page, a user should be redirected from the widget
+    if not request.GET.get('hash'):
+        return HttpResponse('Stuff when have no Telegram data.')
+
     try:
         result = verify_telegram_authentication(bot_token=bot_token, request_data=request.GET)
 
@@ -200,30 +208,30 @@ def index(request):
     except NotTelegramDataError:
         return HttpResponse('Data is not relates to Telegram!')
 
-    # Or handle it like you want. For example, save to DB. :)
+    # Or handle it as you wish. For instance, save to DB.
     return HttpResponse('Hello, ' + result['first_name'] + '!')
 ```
 
-`verify_telegram_authentication` implements a Telegram [instructions](https://core.telegram.org/widgets/login#checking-authorizations) to verify the authentication. If result does not raise errors, it will return dictionary with user data.
+`verify_telegram_authentication` implements Telegram [instructions](https://core.telegram.org/widgets/login#checking-authorizations) to verify the authentication. If result does not raise errors, it will return a dictionary with user data.
 
-`TelegramDataIsOutdatedError` - user data alive for one day only.
+`TelegramDataIsOutdatedError` - user data exists for one day only.
 `NotTelegramDataError` - incorrect data.
 
 ## Development
 
-Install packages that needed for the testing:
+Install the packages required for development:
 
 ```
 $ pip3 install requirements-dev.txt
 ```
 
-Run the tests before development to be sure that `django-telegram-login` works properly:
+Run the tests before development to make sure `django-telegram-login` works properly:
 
 ```
 $ python -m unittest discover
 ```
 
-Follow a codestyle with linters:
+Follow a codestyle with the following linters:
 
 ```
 $ flake8 django_telegram_login && pycodestyle django_telegram_login && pylint django_telegram_login
