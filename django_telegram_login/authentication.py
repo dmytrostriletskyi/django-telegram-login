@@ -1,3 +1,6 @@
+"""
+Telegram login authentication.
+"""
 import base64
 import hashlib
 import hmac
@@ -12,9 +15,14 @@ ONE_DAY_IN_SECONDS = 86400
 
 
 def verify_telegram_authentication(bot_token, request_data):
+    """
+    Check if received data from Telegram based on SHA and HMAC algothims. 
+
+    Instructions - https://core.telegram.org/widgets/login#checking-authorization
+    """
     request_data = request_data.copy()
 
-    recieved_hash = request_data['hash']
+    received_hash = request_data['hash']
     auth_date = request_data['auth_date']
 
     request_data.pop('hash', None)
@@ -34,7 +42,7 @@ def verify_telegram_authentication(bot_token, request_data):
     unix_time_not = int(time.time())
     unix_time_auth_date = int(auth_date)
 
-    if _hash != recieved_hash:
+    if _hash != received_hash:
         raise NotTelegramDataError(
                 'This is not a Telegram data. Hash from recieved authentication data does not match'
                 'with calculated hash based on bot token.'
