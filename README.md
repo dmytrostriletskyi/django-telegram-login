@@ -32,7 +32,8 @@ $ lt --port 8000
 
 You will receive a url, for example `https://gqgh.localtunnel.me`, that you can share with anyone for as long as your local instance of localtunnel remains active. Any requests will be routed to your local service at the specified port.
 
-Use received a url anywhere in development - specify in the settings, set as domain for @[BotFather](t.me/BotFather).
+Use received a url anywhere in development - specify in the settings, set as domain for @[BotFather](t.me/BotFather) and
+brows it - `uqdbszeyer.localtunnel.me/redirect/` instead `127.0.0.1:8000/redirect/`.
 
 ### Instalation
 
