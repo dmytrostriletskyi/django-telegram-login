@@ -1,7 +1,8 @@
 """
 Apps.
 """
-
+# flake8: noqa
+# pylint: disable-all
 from django.apps import AppConfig
 
 
