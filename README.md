@@ -199,16 +199,16 @@ def index(request):
     # Initially, the index page may have no get params in URL
     # For example, if it is a home page, a user should be redirected from the widget
     if not request.GET.get('hash'):
-        return HttpResponse('Stuff when have no Telegram data.')
+        return HttpResponse('Handle the missing Telegram data in the response.')
 
     try:
         result = verify_telegram_authentication(bot_token=bot_token, request_data=request.GET)
 
     except TelegramDataIsOutdatedError:
-        return HttpResponse('Authentication was received more than day ago.')
+        return HttpResponse('Authentication was received more than a day ago.')
 
     except NotTelegramDataError:
-        return HttpResponse('Data is not relates to Telegram!')
+        return HttpResponse('The data is not related to Telegram!')
 
     # Or handle it as you wish. For instance, save to DB.
     return HttpResponse('Hello, ' + result['first_name'] + '!')
