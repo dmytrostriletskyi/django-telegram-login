@@ -122,7 +122,18 @@ Now there are 6 types of widget interfaces you can customize with `django-telegr
 
 ![](https://habrastorage.org/webt/y0/ef/u3/y0efu36pcmghb60kukbf8sw2yjk.png)
 
-It is simple. Import size constants and a constant for disabling photo.
+### Widgets customizing
+
+Required arguments:
+1. `bot_name` - Telegram wants to know your bot name.
+2. `redirect_url` (only for the redirect widget) for receiving user data from Telegram to the specified URL.
+
+Customize widgets with the following constants:
+1. `size` with SMALL, MEDIUM, LARGE.
+2. `corner_radius` - set integer from 1 (materialize style) to 20 (bootstrap style).
+3. `user_photo with` with DISABLE_USER_PHOTO for disabling user photo near the widget.
+
+It is simple. Import size constants, corner radius and a constant for disabling photo.
 
 ```python
 from django_telegram_login.widgets.constants import (
@@ -145,7 +156,7 @@ from django_telegram_login.widgets.generator import (
 Generate widgets according to provided functions.
 
 ```python
-telegram_login_widget = create_callback_login_widget(bot_name, size=SMALL)
+telegram_login_widget = create_callback_login_widget(bot_name, corner_radius=10, size=SMALL)
 
 telegram_login_widget = create_redirect_login_widget(
   redirect_url, bot_name, size=LARGE, user_photo=DISABLE_USER_PHOTO
