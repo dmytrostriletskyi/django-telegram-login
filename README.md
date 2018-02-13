@@ -8,7 +8,7 @@ The external Django application for Telegram authorization (also known as Telegr
 ![Python35](https://img.shields.io/badge/Python-3.5-brightgreen.svg)
 ![Python36](https://img.shields.io/badge/Python-3.6-brightgreen.svg)
 
-[![Habrahabr](https://habrahabr.ru/post/348952/)](https://habrahabr.ru/post/348952/)
+[![Habrahabr](https://img.shields.io/badge/Post-Habrahabr-brightgreen.svg)](https://habrahabr.ru/post/348952/)
 
 ## Getting started
 
