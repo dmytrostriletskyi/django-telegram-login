@@ -24,6 +24,12 @@ redirect_url = settings.TELEGRAM_LOGIN_REDIRECT_URL
 
 
 def index(request):
+
+    # Initially, the index page may have no get params in URL
+    # For example, if it is a home page, a user should be redirected from the widget
+    if not request.GET.get('hash'):
+        return HttpResponse('Stuff when have no Telegram data.')
+
     try:
         result = verify_telegram_authentication(bot_token=bot_token, request_data=request.GET)
 

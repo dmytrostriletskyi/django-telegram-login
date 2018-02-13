@@ -38,10 +38,10 @@ def verify_telegram_authentication(bot_token, request_data):
     secret_key = hashlib.sha256(bot_token.encode()).digest()
     _hash = hmac.new(secret_key, msg=data_check_string.encode(), digestmod=hashlib.sha256).hexdigest()
 
-    unix_time_not = int(time.time())
+    unix_time_now = int(time.time())
     unix_time_auth_date = int(auth_date)
 
-    if unix_time_not - unix_time_auth_date > ONE_DAY_IN_SECONDS:
+    if unix_time_now - unix_time_auth_date > ONE_DAY_IN_SECONDS:
         raise TelegramDataIsOutdatedError(
             'Authentication data is outdated. Authentication was received more than day ago.'
         )

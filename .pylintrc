@@ -115,6 +115,7 @@ disable=
     bad-python3-import,
     deprecated-string-function,
     deprecated-str-translate-call,
+    too-many-arguments
 
 # Enable the message, report, category or checker with the given id(s). You can
 # either give multiple identifier separated by comma (,) or put this option
