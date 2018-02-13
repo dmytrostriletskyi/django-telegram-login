@@ -40,7 +40,7 @@ def verify_telegram_authentication(bot_token, request_data):
 
     unix_time_now = int(time.time())
     unix_time_auth_date = int(auth_date)
-    
+
     if unix_time_now - unix_time_auth_date > ONE_DAY_IN_SECONDS:
         raise TelegramDataIsOutdatedError(
             'Authentication data is outdated. Authentication was received more than day ago.'

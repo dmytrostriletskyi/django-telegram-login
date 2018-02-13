@@ -39,33 +39,33 @@ class TestAuthentication(unittest.TestCase):
             'auth_date': '1518392724',
             'hash': '92ee8156a1482919843bfbaed2a91839f6594b2b98d884046c48ff58fa3a5ace'
         }
-    
+
     @mock.patch('django_telegram_login.authentication.time.time')
-    def test_ok_data(self, mock_time):	
-        """	
-        Received data is correct.	
-        """	
+    def test_ok_data(self, mock_time):
+        """
+        Received data is correct.
+        """
         # auth_date and time now in unix datetime format are the same
         mock_time.return_value = 1518392724
 
-        expected = self.request_data.copy()	
-        expected.pop('hash', None)	
+        expected = self.request_data.copy()
+        expected.pop('hash', None)
 
-        result = verify_telegram_authentication(self.bot_token, self.request_data)	
+        result = verify_telegram_authentication(self.bot_token, self.request_data)
         self.assertEqual(expected, result)
 
     @mock.patch('django_telegram_login.authentication.time.time')
-    def test_wrong_token(self, mock_time):	
-        """	
-        Wrong token.	
-        """	
+    def test_wrong_token(self, mock_time):
+        """
+        Wrong token.
+        """
         # auth_date and time now in unix datetime format are the same
         mock_time.return_value = 1518392724
 
-        request_data = self.request_data.copy()	
-        request_data['hash'] = '92ee8156a1482919843bfbaed2a91839f6594b2b98d884046c48ff58fa3a13c29'	
+        request_data = self.request_data.copy()
+        request_data['hash'] = '92ee8156a1482919843bfbaed2a91839f6594b2b98d884046c48ff58fa3a13c29'
 
-        with self.assertRaises(NotTelegramDataError):	
+        with self.assertRaises(NotTelegramDataError):
             verify_telegram_authentication(self.bot_token, request_data)
 
     def test_outdatet_data(self):
