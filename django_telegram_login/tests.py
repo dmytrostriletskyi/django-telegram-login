@@ -86,15 +86,17 @@ class TestWidgetGenerator(unittest.TestCase):
         self.bot_name = 'test_bot'
         self.redirect_url = 'https://django-telegram-login.com'
 
-        self.expected_callback_small = """<script async src="https://telegram.org/js/telegram-widget.js?2" data-telegram-login="test_bot" data-size="small" data-onauth="onTelegramAuth(user)" data-request-access="write"></script>"""
-        self.expected_callback_medium = """<script async src="https://telegram.org/js/telegram-widget.js?2" data-telegram-login="test_bot" data-size="medium" data-onauth="onTelegramAuth(user)" data-request-access="write"></script>"""
-        self.expected_callback_large = """<script async src="https://telegram.org/js/telegram-widget.js?2" data-telegram-login="test_bot" data-size="large" data-onauth="onTelegramAuth(user)" data-request-access="write"></script>"""
-        self.expected_callback_no_photo = """<script async src="https://telegram.org/js/telegram-widget.js?2" data-telegram-login="test_bot" data-size="small" data-userpic="false" data-onauth="onTelegramAuth(user)" data-request-access="write"></script>"""
+        self.expected_callback_small = """<script async src="https://telegram.org/js/telegram-widget.js?3" data-telegram-login="test_bot" data-size="small" data-onauth="onTelegramAuth(user)" data-request-access="write"></script>"""
+        self.expected_callback_medium = """<script async src="https://telegram.org/js/telegram-widget.js?3" data-telegram-login="test_bot" data-size="medium" data-onauth="onTelegramAuth(user)" data-request-access="write"></script>"""
+        self.expected_callback_large = """<script async src="https://telegram.org/js/telegram-widget.js?3" data-telegram-login="test_bot" data-size="large" data-onauth="onTelegramAuth(user)" data-request-access="write"></script>"""
+        self.expected_callback_no_photo = """<script async src="https://telegram.org/js/telegram-widget.js?3" data-telegram-login="test_bot" data-size="small" data-userpic="false" data-onauth="onTelegramAuth(user)" data-request-access="write"></script>"""
+        self.expected_callback_corner_radius = """<script async src="https://telegram.org/js/telegram-widget.js?3" data-telegram-login="test_bot" data-size="small" data-userpic="false" data-radius="1" data-onauth="onTelegramAuth(user)" data-request-access="write"></script>"""
 
-        self.expected_redirect_small = """<script async src="https://telegram.org/js/telegram-widget.js?2" data-telegram-login="test_bot" data-size="small" data-auth-url="https://django-telegram-login.com" data-request-access="write"></script>"""
-        self.expected_redirect_medium = """<script async src="https://telegram.org/js/telegram-widget.js?2" data-telegram-login="test_bot" data-size="medium" data-auth-url="https://django-telegram-login.com" data-request-access="write"></script>"""
-        self.expected_redirect_large = """<script async src="https://telegram.org/js/telegram-widget.js?2" data-telegram-login="test_bot" data-size="large" data-auth-url="https://django-telegram-login.com" data-request-access="write"></script>"""
-        self.expected_redirect_no_photo = """<script async src="https://telegram.org/js/telegram-widget.js?2" data-telegram-login="test_bot" data-size="small" data-userpic="false" data-auth-url="https://django-telegram-login.com" data-request-access="write"></script>"""
+        self.expected_redirect_small = """<script async src="https://telegram.org/js/telegram-widget.js?3" data-telegram-login="test_bot" data-size="small" data-auth-url="https://django-telegram-login.com" data-request-access="write"></script>"""
+        self.expected_redirect_medium = """<script async src="https://telegram.org/js/telegram-widget.js?3" data-telegram-login="test_bot" data-size="medium" data-auth-url="https://django-telegram-login.com" data-request-access="write"></script>"""
+        self.expected_redirect_large = """<script async src="https://telegram.org/js/telegram-widget.js?3" data-telegram-login="test_bot" data-size="large" data-auth-url="https://django-telegram-login.com" data-request-access="write"></script>"""
+        self.expected_redirect_no_photo = """<script async src="https://telegram.org/js/telegram-widget.js?3" data-telegram-login="test_bot" data-size="small" data-userpic="false" data-auth-url="https://django-telegram-login.com" data-request-access="write"></script>"""
+        self.expected_redirect_corner_radius = """<script async src="https://telegram.org/js/telegram-widget.js?3" data-telegram-login="test_bot" data-size="small" data-userpic="false" data-radius="10" data-auth-url="https://django-telegram-login.com" data-request-access="write"></script>"""
 
     def test_create_callback_small(self):
         result = create_callback_login_widget(self.bot_name, size=SMALL)
@@ -107,6 +109,10 @@ class TestWidgetGenerator(unittest.TestCase):
     def test_create_callback_large(self):
         result = create_callback_login_widget(self.bot_name, size=LARGE)
         self.assertEqual(self.expected_callback_large, result)
+
+    def test_create_callback_corner_radius(self):
+        result = create_callback_login_widget(self.bot_name, corner_radius=1, user_photo=DISABLE_USER_PHOTO)
+        self.assertEqual(self.expected_callback_corner_radius, result)
 
     def test_create_callback_no_photo(self):
         result = create_callback_login_widget(self.bot_name, user_photo=DISABLE_USER_PHOTO)
@@ -123,6 +129,10 @@ class TestWidgetGenerator(unittest.TestCase):
     def test_create_redirect_large(self):
         result = create_redirect_login_widget(self.redirect_url, self.bot_name, size=LARGE)
         self.assertEqual(self.expected_redirect_large, result)
+
+    def test_create_redirect_corner_radius(self):
+        result = create_redirect_login_widget(self.redirect_url, self.bot_name, corner_radius=10, user_photo=DISABLE_USER_PHOTO)
+        self.assertEqual(self.expected_redirect_corner_radius, result)
 
     def test_create_redirect_no_photo(self):
         result = create_redirect_login_widget(self.redirect_url, self.bot_name, user_photo=DISABLE_USER_PHOTO)
