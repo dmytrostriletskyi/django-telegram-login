@@ -44,7 +44,7 @@ def index(request):
 
 
 def callback(request):
-    telegram_login_widget = create_callback_login_widget(bot_name, size=SMALL)
+    telegram_login_widget = create_callback_login_widget(bot_name, corner_radius=10, size=SMALL)
 
     context = {'telegram_login_widget': telegram_login_widget}
     return render(request, 'telegram_auth/callback.html', context)

@@ -103,3 +103,6 @@ pdbemanualtestfiles/
 django_telegram_tools
 manage.py
 login_app
+
+.DS_Store
+

@@ -5,13 +5,13 @@ Errors.
 
 class NotTelegramDataError(Exception):
     """
-    Error for data that was hacked.
+    The verification algorithm did not authorize a Telegram data.
     """
     pass
 
 
 class TelegramDataIsOutdatedError(Exception):
     """
-    Error for outdated data.
+    The Telegram data is outdated
     """
     pass
