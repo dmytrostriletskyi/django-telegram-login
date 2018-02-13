@@ -99,3 +99,7 @@ requirement.txt
 
 .pdbe/
 pdbemanualtestfiles/
+
+django_telegram_tools
+manage.py
+login_app
