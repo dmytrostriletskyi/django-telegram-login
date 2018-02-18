@@ -5,7 +5,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='django-telegram-login',
-    version='0.2.0',
+    version='0.2.1',
     packages = find_packages(
         exclude=[
             'login_app*',
