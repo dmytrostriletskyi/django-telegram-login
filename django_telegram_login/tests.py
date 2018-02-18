@@ -1,9 +1,6 @@
 """
-Tests.
+Tests for django-telegram-login.
 """
-# flake8: noqa
-# pylint: disable-all
-import time
 import unittest
 
 import mock
@@ -26,6 +23,9 @@ from django_telegram_login.errors import (
 
 
 class TestAuthentication(unittest.TestCase):
+    """
+    Tests for athentication functionality.
+    """
 
     def setUp(self):
         self.bot_token = '459236585:AAEee0Ba4fRijf1BRNbBO9W-Ar15F2xgV98'
@@ -80,62 +80,124 @@ class TestAuthentication(unittest.TestCase):
 
 
 class TestWidgetGenerator(unittest.TestCase):
+    """
+    Tests for creation widgets.
+    """
 
     def setUp(self):
 
-        self.bot_name = 'test_bot'
+        self.bot_name = 'django_telegram_bot'
         self.redirect_url = 'https://django-telegram-login.com'
 
-        self.expected_callback_small = """<script async src="https://telegram.org/js/telegram-widget.js?3" data-telegram-login="test_bot" data-size="small" data-onauth="onTelegramAuth(user)" data-request-access="write"></script>"""
-        self.expected_callback_medium = """<script async src="https://telegram.org/js/telegram-widget.js?3" data-telegram-login="test_bot" data-size="medium" data-onauth="onTelegramAuth(user)" data-request-access="write"></script>"""
-        self.expected_callback_large = """<script async src="https://telegram.org/js/telegram-widget.js?3" data-telegram-login="test_bot" data-size="large" data-onauth="onTelegramAuth(user)" data-request-access="write"></script>"""
-        self.expected_callback_no_photo = """<script async src="https://telegram.org/js/telegram-widget.js?3" data-telegram-login="test_bot" data-size="small" data-userpic="false" data-onauth="onTelegramAuth(user)" data-request-access="write"></script>"""
-        self.expected_callback_corner_radius = """<script async src="https://telegram.org/js/telegram-widget.js?3" data-telegram-login="test_bot" data-size="small" data-userpic="false" data-radius="1" data-onauth="onTelegramAuth(user)" data-request-access="write"></script>"""
+        widget_script_start = \
+            """<script async src="https://telegram.org/js/telegram-widget.js?3" data-telegram-login="{}" """.format(
+                self.bot_name
+            )
 
-        self.expected_redirect_small = """<script async src="https://telegram.org/js/telegram-widget.js?3" data-telegram-login="test_bot" data-size="small" data-auth-url="https://django-telegram-login.com" data-request-access="write"></script>"""
-        self.expected_redirect_medium = """<script async src="https://telegram.org/js/telegram-widget.js?3" data-telegram-login="test_bot" data-size="medium" data-auth-url="https://django-telegram-login.com" data-request-access="write"></script>"""
-        self.expected_redirect_large = """<script async src="https://telegram.org/js/telegram-widget.js?3" data-telegram-login="test_bot" data-size="large" data-auth-url="https://django-telegram-login.com" data-request-access="write"></script>"""
-        self.expected_redirect_no_photo = """<script async src="https://telegram.org/js/telegram-widget.js?3" data-telegram-login="test_bot" data-size="small" data-userpic="false" data-auth-url="https://django-telegram-login.com" data-request-access="write"></script>"""
-        self.expected_redirect_corner_radius = """<script async src="https://telegram.org/js/telegram-widget.js?3" data-telegram-login="test_bot" data-size="small" data-userpic="false" data-radius="10" data-auth-url="https://django-telegram-login.com" data-request-access="write"></script>"""
+        callback_widget_script_end = \
+            """data-onauth="onTelegramAuth(user)" data-request-access="write"></script>"""
 
-    def test_create_callback_small(self):
+        redirect_widget_script_end = \
+            """data-auth-url="{}" data-request-access="write"></script>""".format(self.redirect_url)
+
+        self.expected_callback_small = \
+            widget_script_start + """data-size="small" """ + callback_widget_script_end
+        self.expected_callback_medium = \
+            widget_script_start + """data-size="medium" """ + callback_widget_script_end
+        self.expected_callback_large = \
+            widget_script_start + """data-size="large" """ + callback_widget_script_end
+        self.expected_callback_no_photo = \
+            widget_script_start + """data-size="small" data-userpic="false" """ + callback_widget_script_end
+        self.expected_callback_corner_radius = \
+            widget_script_start + \
+            """data-size="small" data-userpic="false" data-radius="1" """ + \
+            callback_widget_script_end
+
+        self.expected_redirect_small = \
+            widget_script_start + """data-size="small" """ + redirect_widget_script_end
+        self.expected_redirect_medium = \
+            widget_script_start + """data-size="medium" """ + redirect_widget_script_end
+        self.expected_redirect_large = \
+            widget_script_start + """data-size="large" """ + redirect_widget_script_end
+        self.expected_redirect_no_photo = \
+            widget_script_start + """data-size="small" data-userpic="false" """ + redirect_widget_script_end
+        self.expected_redirect_corner_radius = \
+            widget_script_start + \
+            """data-size="small" data-userpic="false" data-radius="10" """ + \
+            redirect_widget_script_end
+
+    def test_callback_small(self):
+        """
+        Test creation of small callback login widget.
+        """
         result = create_callback_login_widget(self.bot_name, size=SMALL)
         self.assertEqual(self.expected_callback_small, result)
 
-    def test_create_callback_medium(self):
+    def test_callback_medium(self):
+        """
+        Test creation of medium callback login widget.
+        """
         result = create_callback_login_widget(self.bot_name, size=MEDIUM)
         self.assertEqual(self.expected_callback_medium, result)
 
-    def test_create_callback_large(self):
+    def test_callback_large(self):
+        """
+        Test creation of large callback login widget.
+        """
         result = create_callback_login_widget(self.bot_name, size=LARGE)
         self.assertEqual(self.expected_callback_large, result)
 
-    def test_create_callback_corner_radius(self):
+    def test_callback_corner_radius(self):
+        """
+        Test creation of callback login widget with specified corner radius.
+        """
         result = create_callback_login_widget(self.bot_name, corner_radius=1, user_photo=DISABLE_USER_PHOTO)
         self.assertEqual(self.expected_callback_corner_radius, result)
 
-    def test_create_callback_no_photo(self):
+    def test_callback_no_photo(self):
+        """
+        Test creation of callback login widget without photo.
+        """
         result = create_callback_login_widget(self.bot_name, user_photo=DISABLE_USER_PHOTO)
         self.assertEqual(self.expected_callback_no_photo, result)
 
-    def test_create_redirect_small(self):
+    def test_redirect_small(self):
+        """
+        Test creation of small redirect login widget.
+        """
         result = create_redirect_login_widget(self.redirect_url, self.bot_name, size=SMALL)
         self.assertEqual(self.expected_redirect_small, result)
 
-    def test_create_redirect_medium(self):
+    def test_redirect_medium(self):
+        """
+        Test creation of medium redirect login widget.
+        """
         result = create_redirect_login_widget(self.redirect_url, self.bot_name, size=MEDIUM)
         self.assertEqual(self.expected_redirect_medium, result)
 
-    def test_create_redirect_large(self):
+    def test_redirect_large(self):
+        """
+        Test creation of large redirect login widget.
+        """
         result = create_redirect_login_widget(self.redirect_url, self.bot_name, size=LARGE)
         self.assertEqual(self.expected_redirect_large, result)
 
-    def test_create_redirect_corner_radius(self):
-        result = create_redirect_login_widget(self.redirect_url, self.bot_name, corner_radius=10, user_photo=DISABLE_USER_PHOTO)
+    def test_redirect_corner_radius(self):
+        """
+        Test creation of redirect login widget with specified corner radius.
+        """
+        result = create_redirect_login_widget(
+            self.redirect_url, self.bot_name, corner_radius=10, user_photo=DISABLE_USER_PHOTO
+        )
         self.assertEqual(self.expected_redirect_corner_radius, result)
 
-    def test_create_redirect_no_photo(self):
-        result = create_redirect_login_widget(self.redirect_url, self.bot_name, user_photo=DISABLE_USER_PHOTO)
+    def test_redirect_no_photo(self):
+        """
+        Test creation of redirect login widget without photo.
+        """
+        result = create_redirect_login_widget(
+            self.redirect_url, self.bot_name, user_photo=DISABLE_USER_PHOTO
+        )
         self.assertEqual(self.expected_redirect_no_photo, result)
 
 

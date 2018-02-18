@@ -3,40 +3,71 @@ Widgets generator interface.
 """
 from django_telegram_login.widgets.constants import SMALL
 
+WIDGET_SCRIPT_START = '<script async src="https://telegram.org/js/telegram-widget.js?3" '
+WIDGET_SCRIPT_END = '></script>'
+WIDGET_ONAUTH = 'data-onauth="onTelegramAuth(user)" '
+ACCESS_WRITE_DEFAULT = True
+
+
+def _generate_widget_parameters(bot_name, user_photo, size, corner_radius, access_write):
+    """
+    Generate common widget embed code parameters.
+    """
+    user_photo_bool = str(user_photo).lower()
+
+    data_telegram_login = 'data-telegram-login="{}" '.format(bot_name)
+    data_size = 'data-size="{}" '.format(size)
+    data_userpic = 'data-userpic="{}" '.format(user_photo_bool) if not user_photo else ''
+    data_radius = 'data-radius="{}" '.format(corner_radius) if corner_radius else ''
+    data_request_access = 'data-request-access="write"' if access_write else ''
+
+    return data_telegram_login, data_size, data_userpic, data_radius, data_request_access
+
 
 def create_callback_login_widget(
-        bot_name, size=SMALL, corner_radius=None, user_photo=True, access_write=True
+        bot_name,
+        size=SMALL,
+        corner_radius=None,
+        user_photo=True,
+        access_write=ACCESS_WRITE_DEFAULT
 ):
     """
-    Create callback widget, that allows to handle user data in JavaSccript.
+    Create a callback widget, that allows to handle an user data in JavaScript (onTelegramAuth func).
     """
-    script_initital = '<script async src="https://telegram.org/js/telegram-widget.js?3" '
-    bot = 'data-telegram-login="{}" '.format(bot_name)
-    size = 'data-size="{}" '.format(size)
-    userpic = 'data-userpic="{}" '.format(str(user_photo).lower()) if not user_photo else ''
-    corner_radius = 'data-radius="{}" '.format(corner_radius) if corner_radius else ''
-    onauth = 'data-onauth="onTelegramAuth(user)" '
-    access = 'data-request-access="write"' if access_write else ''
-    script_end = '></script>'
+    data_telegram_login, data_size, data_userpic, data_radius, data_request_access = \
+        _generate_widget_parameters(bot_name, user_photo, size, corner_radius, access_write)
 
-    widget_script = script_initital + bot + size + userpic + corner_radius + onauth + access + script_end
-    return widget_script
+    return WIDGET_SCRIPT_START \
+        + data_telegram_login \
+        + data_size \
+        + data_userpic \
+        + data_radius \
+        + WIDGET_ONAUTH \
+        + data_request_access \
+        + WIDGET_SCRIPT_END
 
 
 def create_redirect_login_widget(
-        redirect_url, bot_name, size=SMALL, corner_radius=None, user_photo=True, access_write=True
+        redirect_url,
+        bot_name,
+        size=SMALL,
+        corner_radius=None,
+        user_photo=True,
+        access_write=ACCESS_WRITE_DEFAULT
 ):
     """
-    Create redirect widget, that allows to handle user data as get request params.
+    Create a redirect widget, that allows to handle an user data as get request parameters.
     """
-    script_initital = '<script async src="https://telegram.org/js/telegram-widget.js?3" '
-    bot = 'data-telegram-login="{}" '.format(bot_name)
-    size = 'data-size="{}" '.format(size)
-    userpic = 'data-userpic="{}" '.format(str(user_photo).lower()) if not user_photo else ''
-    corner_radius = 'data-radius="{}" '.format(corner_radius) if corner_radius else ''
-    redirect = 'data-auth-url="{}" '.format(redirect_url)
-    access = 'data-request-access="write"' if access_write else ''
-    script_end = '></script>'
+    data_auth_url = 'data-auth-url="{}" '.format(redirect_url)
 
-    widget_script = script_initital + bot + size + userpic + corner_radius + redirect + access + script_end
-    return widget_script
+    data_telegram_login, data_size, data_userpic, data_radius, data_request_access = \
+        _generate_widget_parameters(bot_name, user_photo, size, corner_radius, access_write)
+
+    return WIDGET_SCRIPT_START \
+        + data_telegram_login \
+        + data_size \
+        + data_userpic \
+        + data_radius \
+        + data_auth_url \
+        + data_request_access \
+        + WIDGET_SCRIPT_END
