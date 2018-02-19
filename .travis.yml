@@ -1,18 +1,22 @@
 language:
-- python
+  - python
+
 sudo:
-- false
+  - false
   
 python:
-- 2.7
-- 3.5
-- 3.6
+  - 2.7
+  - 3.5
+  - 3.6
   
 before_install:
-- pip install -r requirements-dev.txt
+  - pip install -r requirements-dev.txt
   
 script:
-- flake8 django_telegram_login
-- pycodestyle django_telegram_login
-- pylint django_telegram_login
-- python -m unittest discover
+  - flake8 django_telegram_login
+  - pycodestyle django_telegram_login
+  - pylint django_telegram_login
+  - coverage run --source=. -m unittest discover && coverage report -m
+
+after_success:
+  - codecov
