@@ -17,6 +17,3 @@ script:
   - pycodestyle django_telegram_login
   - pylint django_telegram_login
   - coverage run --source=. -m unittest discover && coverage report -m
-
-after_success:
-  - codecov
