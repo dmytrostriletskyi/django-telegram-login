@@ -5,11 +5,16 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='django-telegram-login',
-    version='0.1.1',
-    packages=find_packages(),
+    version='0.2.1',
+    packages = find_packages(
+        exclude=[
+            'login_app*',
+            'django_telegram_tools',
+        ]
+    ),
     include_package_data=True,
     license='MIT',
-    description='Telegram login interface and widgets for Django projects, that allows to handle user based on Telegram data.',
+    description='The reusable Django application for Telegram authorization (also known as Telegram login).',
     url='https://github.com/dmytrostriletskyi/django-telegram-login',
     author='Dmytro Striletskyi',
     author_email='dmytro.striletskyi@gmail.com',

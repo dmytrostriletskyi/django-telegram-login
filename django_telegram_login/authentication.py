@@ -1,5 +1,5 @@
 """
-Telegram login authentication.
+Telegram login authentication functionality.
 """
 import hashlib
 import hmac
@@ -15,8 +15,9 @@ ONE_DAY_IN_SECONDS = 86400
 
 def verify_telegram_authentication(bot_token, request_data):
     """
-    Check if received data from Telegram based on SHA and HMAC algothims.
+    Check if received data from Telegram is real.
 
+    Based on SHA and HMAC algothims.
     Instructions - https://core.telegram.org/widgets/login#checking-authorization
     """
     request_data = request_data.copy()
