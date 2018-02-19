@@ -4,15 +4,19 @@ The external Django application for Telegram authorization (also known as Telegr
 
 [![Release](https://img.shields.io/github/release/dmytrostriletskyi/django-telegram-login.svg)](https://github.com/dmytrostriletskyi/django-telegram-login/releases)
 ![Build](https://api.travis-ci.org/dmytrostriletskyi/django-telegram-login.svg?branch=develop)
+![Codecov](https://img.shields.io/codecov/c/github/dmytrostriletskyi/django-telegram-login/develop.svg)
 ![Python27](https://img.shields.io/badge/Python-2.7-brightgreen.svg)
 ![Python35](https://img.shields.io/badge/Python-3.5-brightgreen.svg)
 ![Python36](https://img.shields.io/badge/Python-3.6-brightgreen.svg)
 
 [![Habrahabr](https://img.shields.io/badge/Post-Habrahabr-brightgreen.svg)](https://habrahabr.ru/post/348952/)
+[![Medium](https://img.shields.io/badge/Post-Medium-brightgreen.svg)](https://medium.com/@dmytrostriletskyi/the-telegram-login-for-your-website-on-django-3661f8ac7a2e)
 
 ## Getting started
 
 Full tutorial on russian on [Habrahabr](https://habrahabr.ru/post/348952).
+
+Full tutorial on english on [Medium](https://medium.com/@dmytrostriletskyi/the-telegram-login-for-your-website-on-django-3661f8ac7a2e).
 
 First of all, please, if you want to implement a Telegram login into website, check the official [news](https://telegram.org/blog/login) and the [widgets documentation](https://core.telegram.org/widgets/login).
 
