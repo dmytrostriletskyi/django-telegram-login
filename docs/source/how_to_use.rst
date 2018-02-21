@@ -45,15 +45,16 @@ So you can handle it on the front-end or make a ``AJAX`` call to back-end and tr
         redirect_url, bot_name, size=LARGE, user_photo=DISABLE_USER_PHOTO
     )
 
-[12/Feb/2018 03:32:04] "GET /
-    ?id=299661134
-    &first_name=Dmytro
-    &last_name=Striletskyi
-    &username=dmytrostriletskyi
-    &photo_url=https%3A%2F%2Ft.me%2Fi%2Fuserpic%2F320%2Fdmytrostriletskyi.jpg
-    &auth_date=1518406180
-    &hash=f5cd61a87131fcf51fc745d465a36bdcc58db4175ccac7c5afbf641359f55807 
-    HTTP/1.1" 200 14
+.. code-block:: python
+    [12/Feb/2018 03:32:04] "GET /
+        ?id=299661134
+        &first_name=Dmytro
+        &last_name=Striletskyi
+        &username=dmytrostriletskyi
+        &photo_url=https%3A%2F%2Ft.me%2Fi%2Fuserpic%2F320%2Fdmytrostriletskyi.jpg
+        &auth_date=1518406180
+        &hash=f5cd61a87131fcf51fc745d465a36bdcc58db4175ccac7c5afbf641359f55807 
+        HTTP/1.1" 200 14
 
 So get it in ``request.GET`` within your view that handle request on specified URL.
 
@@ -69,7 +70,7 @@ Customize **widgets interface** with the following parameters:
 Customize **widgets login type** with the following parameters:
 
 1. ``Bot name``: name of bot as string. 
-2. ``Redirect URL`` (required only for the redirect widget): website address that will receive user's data by request.
+2. ``Redirect URL`` (required only for the redirect widget): website address that will receive user's data by get request.
 
 Import size constants, corner radius and a constant for disabling photo.
 
@@ -164,7 +165,7 @@ There may be the situations, when hackers will send you incorrect Telegram data 
         # Or handle it as you wish. For instance, save to DB.
         return HttpResponse('Hello, ' + result['first_name'] + '!')
 
-``verify_telegram_authentication`` implements Telegram `instructions <https://core.telegram.org/widgets/login#checking-authorizations>`_ to verify the authentication. If result does not raise errors, it will return a dictionary with user data.
+``verify_telegram_authentication`` implements Telegram `instructions <https://core.telegram.org/widgets/login#checking-authorization>`_ to verify the authentication. If result does not raise errors, it will return a dictionary with user data.
 
 Errors:
 

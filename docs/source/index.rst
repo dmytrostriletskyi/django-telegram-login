@@ -18,15 +18,15 @@ You are able to start working with package from tutorials:
 - `Habrahabr article <https://habrahabr.ru/post/348952>`_ written in russion
 - `Medium article <https://medium.com/@dmytrostriletskyi/the-telegram-login-for-your-website-on-django-3661f8ac7a2e>`_ written in english
 
-They are actual for v0.2.3 of package. If current version is highest, you need to learn a package's capabilities more here.
+Tutorial consists of step-by-step guide and cointans a lot of illustrations.
 
 It is good to check the following official pages about Telegram login:
 
 - `Telegram login news <https://telegram.org/blog/login>`_
 - `Login widgtes documentation <https://core.telegram.org/widgets/login>`_
 
-User's guid
-^^^^^^^^^^^
+User's guide
+^^^^^^^^^^^^
 
 .. toctree::
    :maxdepth: 2
