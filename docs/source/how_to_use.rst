@@ -37,7 +37,7 @@ Telegram response with the following data relates to login widgtes types:
 
 So you can handle it on the front-end or make a ``AJAX`` call to back-end and transfer a data.
 
-**Redirect** transfers user to the specified link - it will contain a user data in get request params in url.
+**Redirect** transfers user to the specified link.
 
 .. code-block:: python
 
@@ -45,7 +45,10 @@ So you can handle it on the front-end or make a ``AJAX`` call to back-end and tr
         redirect_url, bot_name, size=LARGE, user_photo=DISABLE_USER_PHOTO
     )
 
+It will contain an user's data in get request parameters.
+
 .. code-block:: python
+
     [12/Feb/2018 03:32:04] "GET /
         ?id=299661134
         &first_name=Dmytro
