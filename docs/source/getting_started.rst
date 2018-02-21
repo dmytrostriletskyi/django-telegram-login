@@ -30,12 +30,14 @@ Settings
 
 Add application to the installed apps:
 
+.. code-block:: python
+
     INSTALLED_APPS = [
         ...
         'django_telegram_login',
     ]
 
-If you use only one bot you are able to add the following settings to own settings.py in Django project::
+If you use only one bot you are able to add the following settings to own ``settings.py`` in Django project::
 
     TELEGRAM_BOT_NAME = 'django_telegram_login_bot'
     TELEGRAM_BOT_TOKEN = '459236585:AAEee0Ba4fRijf1BRNbBO9W-Ar15F2xgV98'
@@ -50,4 +52,4 @@ And use them in cases below::
     bot_token = settings.TELEGRAM_BOT_TOKEN
     redirect_url = settings.TELEGRAM_LOGIN_REDIRECT_URL
 
-But django-telegram-login allows you to use unlimited bots as you will see during learing the package.
+But ``django-telegram-login`` allows you to use unlimited bots as you will see during learing the package.
