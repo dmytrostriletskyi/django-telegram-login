@@ -15,21 +15,29 @@ For now you are able to customize widget by the following arguments:
 Login widgets types
 ^^^^^^^^^^^^^^^^^^^
 
-You are able to make two reactions for user interaction with a button: callback and redirect. `Callback` allows you to handle user data currently on page - you will receive data from Telegram in special JavaScript-function handler (you need to implement it. Or just copy it).
+You are able to make two reactions for user interaction with a button: ``callback`` and ``redirect``. 
+Telegram response with the following data relates to login widgtes types: 
+
+1. first_name: first name.
+2. last_name: last name.
+3. username: username.
+4. photo_url: link to user's photo that located in Telegram storage
+5. auth_date: Unix datetime (time in second from time when Unix was born)
+6. hash: secret thing to verify data above.
+
+**Callback** allows you to handle user data currently on page - you will receive data from Telegram in special ``JavaScript-function-handler`` (you need to implement it but save the name).
 
 .. code-block:: javascript
 
     <script type="text/javascript">
-    function onTelegramAuth(user) {
-        alert('Logged in as ' + user.first_name + ' ' + user.last_name + '!');
-    }
+        function onTelegramAuth(user) {
+            alert('Logged in as ' + user.first_name + ' ' + user.last_name + '!');
+        }
     </script>
 
-A list of user data is following: first_name, last_name, username, photo_url, auth_date (unix datetime) and hash. The two last you do not realy need in development.
+So you can handle it on the front-end or make a ``AJAX`` call to back-end and transfer a data.
 
-So you can handle it on the front-end or make a AJAX call to back-end and transfer a data.
-
-`Redirect` transfers user to the specified link - it will contain a user data in get request params in url.
+**Redirect** transfers user to the specified link - it will contain a user data in get request params in url.
 
 .. code-block:: python
 
@@ -37,9 +45,17 @@ So you can handle it on the front-end or make a AJAX call to back-end and transf
         redirect_url, bot_name, size=LARGE, user_photo=DISABLE_USER_PHOTO
     )
 
-So get it in request.GET within your view that handle specified url::
+[12/Feb/2018 03:32:04] "GET /
+    ?id=299661134
+    &first_name=Dmytro
+    &last_name=Striletskyi
+    &username=dmytrostriletskyi
+    &photo_url=https%3A%2F%2Ft.me%2Fi%2Fuserpic%2F320%2Fdmytrostriletskyi.jpg
+    &auth_date=1518406180
+    &hash=f5cd61a87131fcf51fc745d465a36bdcc58db4175ccac7c5afbf641359f55807 
+    HTTP/1.1" 200 14
 
-[12/Feb/2018 03:32:04] "GET /?id=299661134&first_name=Dmytro&last_name=Striletskyi&username=dmytrostriletskyi&photo_url=https%3A%2F%2Ft.me%2Fi%2Fuserpic%2F320%2Fdmytrostriletskyi.jpg&auth_date=1518406180&hash=f5cd61a87131fcf51fc745d465a36bdcc58db4175ccac7c5afbf641359f55807 HTTP/1.1" 200 14
+So get it in ``request.GET`` within your view that handle request on specified URL.
 
 Customizing
 ^^^^^^^^^^^
@@ -82,7 +98,7 @@ Generate widgets according to provided functions.
     telegram_callback_login_widget = create_callback_login_widget(bot_name, corner_radius=10, size=SMALL)
 
     telegram_callback_llogin_widget = create_redirect_login_widget(
-    redirect_url, bot_name, size=LARGE, user_photo=DISABLE_USER_PHOTO
+        redirect_url, bot_name, size=LARGE, user_photo=DISABLE_USER_PHOTO
     )
 
 Rendering
@@ -109,9 +125,11 @@ So use it in your views via context.
         context = {'telegram_login_widget': telegram_login_widget}
         return render(request, 'telegram_auth/redirect.html', context)
 
-Do not forget to make its rendering safe, because it is not a raw text but Javascript. Below is an example of a Jinja code.
+Do not forget to make its rendering safe, because it is not a raw text but ``Javascript``. Below is an example of a ``Jinja code``.
 
-{% autoescape off %}{{ telegram_login_widget }}{% endautoescape %}
+.. code-block:: html
+
+    {% autoescape off %} {{ telegram_login_widget }} {% endautoescape %}
 
 Telegram authentication
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -146,9 +164,9 @@ There may be the situations, when hackers will send you incorrect Telegram data 
         # Or handle it as you wish. For instance, save to DB.
         return HttpResponse('Hello, ' + result['first_name'] + '!')
 
-`verify_telegram_authentication` implements Telegram `instructions <https://core.telegram.org/widgets/login#checking-authorizations>`_ to verify the authentication. If result does not raise errors, it will return a dictionary with user data.
+``verify_telegram_authentication`` implements Telegram `instructions <https://core.telegram.org/widgets/login#checking-authorizations>`_ to verify the authentication. If result does not raise errors, it will return a dictionary with user data.
 
 Errors:
 
-1. NotTelegramDataError - the verification algorithm did not authorize Telegram data.
-2. TelegramDataIsOutdatedError - The Telegram data is outdated.
+1. ``NotTelegramDataError`` - the verification algorithm did not authorize Telegram data.
+2. ``TelegramDataIsOutdatedError`` - The Telegram data is outdated.
