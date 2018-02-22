@@ -11,7 +11,7 @@ Welcome to django-telegram-login
 **django-telegram-login** is a reusable Django application for Telegram authorization, also known as Telegram login.
 
 This package provides a widgets generators as part of HTML code that you can render from view by context easly, 
-also callback and redirect ways to user's login, and simple widgets' customization functionaly.
+also callback and redirect ways to user's login, and simple widgets' customization functionality.
 
 You are able to start working with package from tutorials:
 
