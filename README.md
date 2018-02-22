@@ -31,4 +31,4 @@ You are able to start working with package from tutorials:
 1. [Habrahabr](https://habrahabr.ru/post/348952) article written in russion
 2. [Medium](https://medium.com/@dmytrostriletskyi/the-telegram-login-for-your-website-on-django-3661f8ac7a2e) article written in english
 
-The [documentation](http://django-telegram-login.readthedocs.io/) (django-telegram-login.readthedocs.io) of the package.
+The [documentation](http://django-telegram-login.readthedocs.io/) (https://django-telegram-login.readthedocs.io) of the package.
