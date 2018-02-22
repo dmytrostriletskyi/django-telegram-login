@@ -21,7 +21,7 @@ This package provides a widgets generators as part of HTML code that you can ren
 Install and update using pip:
 
 ```
-$ pip install djang-telegram-login
+$ pip install django-telegram-login
 ```
 
 ## Getting started
